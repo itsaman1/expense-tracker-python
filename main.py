@@ -48,6 +48,29 @@ class ExpenseTracker:
         except IndexError:
             print("Invalid index. Expense not found.")
 
+    def update_expense(self, index, amount=None, date=None, category=None, description=None):
+        try:
+            expense = self.expenses[index]
+            if amount:
+                expense.amount = float(amount)
+            if date:
+                expense.date = datetime.strptime(date, "%Y-%m-%d").date()
+            if category:
+                expense.category = category
+            if description:
+                expense.description = description
+            print("Expense updated.")
+        except (ValueError, IndexError) as e:
+            print(f"Error updating expense: {e}")
+
+    def filter_by_category(self, category):
+        categorized_expenses = [e.to_dict() for e in self.expenses if e.category == category]
+        if categorized_expenses:
+            for expense in categorized_expenses:
+                print(expense)
+        else:
+            print(f"No expenses found for category: {category}")
+
 
 # Main execution block
 def main():
