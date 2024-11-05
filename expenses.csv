@@ -1,2 +1,5 @@
 amount,date,category,description
 20.0,2024-11-04,Beverage,Coca cola
+50.0,2024-11-04,Vegetable,Tomato
+100.0,2024-11-01,Grocery,Item
+200.0,2024-11-02,Vegetable,Patato
