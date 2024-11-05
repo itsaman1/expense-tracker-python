@@ -17,6 +17,24 @@ class Expense:
             "description": self.description
         }
 
+class ExpenseTracker:
+    def __init__(self, filename='expenses.csv'):
+        self.expenses = []
+        self.filename = filename
+        self.load_expenses()
+
+    def add_expense(self, amount, date, category, description):
+        try:
+            date = datetime.strptime(date, "%Y-%m-%d").date()  # Validate date format
+            amount = float(amount)  # Validate amount as a positive number
+            if amount <= 0:
+                raise ValueError("Amount must be positive.")
+            expense = Expense(amount, date, category, description)
+            self.expenses.append(expense)
+            print(f"Added expense: {expense.to_dict()}")
+        except ValueError as e:
+            print(f"Invalid input: {e}")
+
 
 # Main execution block
 def main():
