@@ -35,6 +35,19 @@ class ExpenseTracker:
         except ValueError as e:
             print(f"Invalid input: {e}")
 
+    def view_expenses(self):
+        if not self.expenses:
+            print("No expenses recorded.")
+        for index, expense in enumerate(self.expenses):
+            print(f"Index {index}: {expense.to_dict()}")
+
+    def delete_expense(self, index):
+        try:
+            removed_expense = self.expenses.pop(index)
+            print(f"Deleted expense: {removed_expense.to_dict()}")
+        except IndexError:
+            print("Invalid index. Expense not found.")
+
 
 # Main execution block
 def main():
