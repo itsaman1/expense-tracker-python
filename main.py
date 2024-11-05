@@ -88,6 +88,31 @@ class ExpenseTracker:
         else:
             print("No expenses found for the selected time period.")
 
+    def save_expenses(self):
+        try:
+            with open(self.filename, 'w', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=["amount", "date", "category", "description"])
+                writer.writeheader()
+                for expense in self.expenses:
+                    writer.writerow(expense.to_dict())
+            print("Expenses saved to CSV.")
+        except IOError as e:
+            print(f"Error saving file: {e}")
+
+    def load_expenses(self):
+        try:
+            with open(self.filename, 'r') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    self.expenses.append(
+                        Expense(float(row["amount"]), datetime.strptime(row["date"], "%Y-%m-%d").date(), row["category"], row["description"])
+                    )
+            print("Expenses loaded from CSV.")
+        except FileNotFoundError:
+            print("No previous data found. Starting with an empty list.")
+        except IOError as e:
+            print(f"Error loading file: {e}")
+
 
 # Main execution block
 def main():
