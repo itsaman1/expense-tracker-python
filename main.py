@@ -71,6 +71,23 @@ class ExpenseTracker:
         else:
             print(f"No expenses found for category: {category}")
 
+    def generate_report(self, time_period):
+        report = {}
+        now = datetime.now().date()
+        for expense in self.expenses:
+            if time_period == "daily" and expense.date == now:
+                report[expense.date] = report.get(expense.date, 0) + expense.amount
+            elif time_period == "weekly" and (now - expense.date).days <= 7:
+                report[expense.date] = report.get(expense.date, 0) + expense.amount
+            elif time_period == "monthly" and (now.year == expense.date.year and now.month == expense.date.month):
+                report[expense.date] = report.get(expense.date, 0) + expense.amount
+
+        if report:
+            for date, total in report.items():
+                print(f"Date: {date}, Total Expense: {total}")
+        else:
+            print("No expenses found for the selected time period.")
+
 
 # Main execution block
 def main():
